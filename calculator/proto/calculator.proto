@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package calculator;
 
-option go_package = "grpc-go-cource/calculator/proto;service";
+option go_package = "grpc-go-course/calculator/proto;service";
 
 message SumRequest {
     int32 first_number = 1;
