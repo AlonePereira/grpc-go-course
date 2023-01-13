@@ -21,5 +21,5 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewCalculatorServiceClient(conn)
-	doSum(client)
+	doPrimeNumber(client)
 }
