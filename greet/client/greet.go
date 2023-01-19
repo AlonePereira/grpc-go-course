@@ -78,3 +78,50 @@ func doLongGreet(client pb.GreetServiceClient) {
 
 	log.Printf("LongGreet: %s\n", resp.Result)
 }
+
+func doGreetEveryone(client pb.GreetServiceClient) {
+
+	stream, err := client.GreetEveryone(context.Background())
+
+	if err != nil {
+		log.Fatalf("Error while calling GreetEveryone %v\n", err)
+	}
+
+	reqs := []*pb.GreetRequest{
+		{FirstName: "Alone"},
+		{FirstName: "Giovanna"},
+		{FirstName: "Laura"},
+		{FirstName: "Jaqueline"},
+	}
+
+	waitc := make(chan struct{})
+
+	go func() {
+		for _, req := range reqs {
+			log.Printf("Send request: %v\n", req)
+			stream.Send(req)
+			time.Sleep(1 * time.Second)
+		}
+		stream.CloseSend()
+	}()
+
+	go func() {
+		for {
+			resp, err := stream.Recv()
+
+			if err == io.EOF {
+				break
+			}
+
+			if err != nil {
+				log.Printf("Error while receiving: %v\n", err)
+				break
+			}
+
+			log.Printf("Received: %v\n", resp.Result)
+		}
+		close(waitc)
+	}()
+
+	<-waitc
+}
