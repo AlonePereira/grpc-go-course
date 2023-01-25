@@ -23,5 +23,6 @@ func main() {
 	client := pb.NewCalculatorServiceClient(conn)
 	// doPrimeNumber(client)
 	// doAvg(client)
-	doMax(client)
+	// doMax(client)
+	doSqrt(client, -2)
 }
