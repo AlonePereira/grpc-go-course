@@ -24,6 +24,7 @@ func main() {
 
 	id := createBlog(client)
 
-	readBlog(client, id)       //valid
-	readBlog(client, "dajkhs") //invalid
+	readBlog(client, id) //valid
+	// readBlog(client, "dajkhs") //invalid
+	updateBlog(client, id)
 }
