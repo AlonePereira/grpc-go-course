@@ -26,5 +26,6 @@ func main() {
 
 	readBlog(client, id) //valid
 	// readBlog(client, "dajkhs") //invalid
-	updateBlog(client, id)
+	// updateBlog(client, id)
+	listBlog(client)
 }

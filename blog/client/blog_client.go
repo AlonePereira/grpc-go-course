@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 
 	pb "github.com/AlonePereira/grpc-go-course/blog/proto"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func createBlog(c pb.BlogServiceClient) string {
@@ -59,4 +61,28 @@ func updateBlog(c pb.BlogServiceClient, id string) {
 	}
 
 	log.Println("Blog was update")
+}
+
+func listBlog(c pb.BlogServiceClient) {
+	log.Println("---listBlog was invoked---")
+
+	stream, err := c.ListBlogs(context.Background(), &emptypb.Empty{})
+
+	if err != nil {
+		log.Fatalf("Error while calling ListBlogs: %v\n", err)
+	}
+
+	for {
+		resp, err := stream.Recv()
+
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			log.Fatalf("Something Happened: %v\n", err)
+		}
+
+		log.Println(resp)
+	}
 }
