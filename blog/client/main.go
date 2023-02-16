@@ -28,4 +28,6 @@ func main() {
 	// readBlog(client, "dajkhs") //invalid
 	// updateBlog(client, id)
 	listBlog(client)
+	deleteBlog(client, id)
+	deleteBlog(client, id)
 }
